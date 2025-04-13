@@ -1,0 +1,160 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Differentiating the R^3 Multivariate Vector Cross Product</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<script>
+  MathJax = {
+    tex: {
+      displayMath: [['\\[', '\\]'], ['$$', '$$']],  
+      inlineMath: [['\\(', '\\)']]                  
+    },
+    loader:{
+      load: ['ui/safe']
+    },
+  };
+</script>
+  
+  
+</head>
+<body>
+  <main class="container">
+    <header class="profile">
+    <h1><a href="/" class="site-title">Jacob Harding</a></h1>
+    <p class="bio">Software Engineer | C++ Specialist | Graphics Enthusiast</p>
+    <p>I’m currently on the lookout for my next software engineering role — if you know of something cool, feel free to reach out! 😊</p>
+    <div class="icons">
+      <a href="https://www.linkedin.com/in/jacob-harding-a62096254/" target="_blank"><i class="fab fa-linkedin"></i></a>
+      <a href="https://github.com/jacobharding" target="_blank"><i class="fab fa-github"></i></a>
+    </div>
+</header>
+    
+    <div class="post_container">
+        <div>
+            <h2 style="margin: 0;">Differentiating the R^3 Multivariate Vector Cross Product</h2>
+            <span class="date">2025-04-09</span>
+        </div>
+        <p>Suppose \(\mathbf{x} \in \mathbb{R}^{3 \times 1}\) and \(\mathbf{f}(\mathbf{x}), \mathbf{g}(\mathbf{x}): \mathbb{R}^{3 \times 1} \rightarrow \mathbb{R}^{3 \times 1}\). The goal is to find the matrix of first-order partial derivatives of the cross product of \(\mathbf{f}\) and \(\mathbf{g}\):</p>
+\[ \frac{\partial}{\partial \mathbf{x}}(\mathbf{f}(\mathbf{x}) \times \mathbf{g}(\mathbf{x}))\]
+<p>A matrix of first-order partial derivatives is also called a Jacobian matrix so an equivalent notation can be defined:</p>
+\[ \mathbf{J}_{\mathbf{x}}(\mathbf{f}(\mathbf{x}) \times \mathbf{g}(\mathbf{x})) = \frac{\partial}{\partial \mathbf{x}}(\mathbf{f}(\mathbf{x}) \times \mathbf{g}(\mathbf{x}))\]
+<p>Instead of taking the derivative with respect to the whole \(\mathbf{x}\), its easier to take it with respect to each component of \(\mathbf{x}\) individually, and build the Jacobian from each of these derivatives. For example, we find \(\frac{\partial \mathbf{f} \times \mathbf{g}}{\partial x_0}\), \(\frac{\partial \mathbf{f} \times \mathbf{g}}{\partial x_1}\), and \(\frac{\partial \mathbf{f} \times \mathbf{g}}{\partial x_2}\) which are all column vectors of partial derivatives. Each of these correspond to a column of the Jacobian matrix so they can be assembled into the complete Jacobian like so:</p>
+$$ 
+\mathbf{J}_{\mathbf{x}}(\mathbf{f}(\mathbf{x}) \times \mathbf{g}(\mathbf{x})) = 
+\begin{bmatrix}
+\frac{\partial \mathbf{f} \times \mathbf{g}}{\partial x_0} &
+\frac{\partial \mathbf{f} \times \mathbf{g}}{\partial x_1} &
+\frac{\partial \mathbf{f} \times \mathbf{g}}{\partial x_2} 
+\end{bmatrix}
+$$
+<p>The standard form of the product rule works with the cross product with respect to a single variable like we have with each column vector of partial derivatives so we find:
+</p>
+$$
+\frac{\partial \mathbf{f} \times \mathbf{g}}{\partial x_0} = (\frac{\partial \mathbf{f}}{\partial x_0} \times \mathbf{g}) + (\mathbf{f} \times \frac{\partial \mathbf{g}}{\partial x_0})
+$$
+<p>
+Substituting each column of partial derivatives with its product rule definition gives the matrix:
+</p>
+$$
+    \begin{bmatrix}
+    (\frac{\partial \mathbf{f}}{\partial x_0} \times \mathbf{g}) + (\mathbf{f} \times \frac{\partial \mathbf{g}}{\partial x_0}) &
+    (\frac{\partial \mathbf{f}}{\partial x_1} \times \mathbf{g}) + (\mathbf{f} \times \frac{\partial \mathbf{g}}{\partial x_1}) &
+    (\frac{\partial \mathbf{f}}{\partial x_2} \times \mathbf{g}) + (\mathbf{f} \times \frac{\partial \mathbf{g}}{\partial x_2}) 
+    \end{bmatrix}
+$$
+<p>
+This can be split into a two matrix sum by gathering all the cross product terms with \(\mathbf{f}\) into one matrix and all the cross products with \(\mathbf{g}\) into the other:
+</p>
+$$
+    \begin{bmatrix}
+    (\frac{\partial \mathbf{f}}{\partial x_0} \times \mathbf{g}) &
+    (\frac{\partial \mathbf{f}}{\partial x_1} \times \mathbf{g}) &
+    (\frac{\partial \mathbf{f}}{\partial x_2} \times \mathbf{g}) 
+    \end{bmatrix}
+    +
+    \begin{bmatrix}
+    (\mathbf{f} \times \frac{\partial \mathbf{g}}{\partial x_0}) &
+    (\mathbf{f} \times \frac{\partial \mathbf{g}}{\partial x_1}) &
+    (\mathbf{f} \times \frac{\partial \mathbf{g}}{\partial x_2}) 
+    \end{bmatrix}
+$$
+<p>Now I&rsquo;m going to introduce some new notation of a matrix crossed with a vector: \(\mathbf{A} \times \mathbf{v}\). This notation means form a matrix with the same size as \(\mathbf{A}\), where each column is the cross product of the corresponding \(\mathbf{A}\) matrix column with the vector \(\mathbf{v}\). For example:</p>
+$$
+\mathbf{A} \times \mathbf{v} = \begin{bmatrix} \mathbf{A}_{\text{col0}} \times \mathbf{v} \qquad \mathbf{A}_{\text{col1}} \times \mathbf{v} \qquad \mathbf{A}_{\text{col2}} \times \mathbf{v} \end{bmatrix}
+$$
+<p>With this notation established and the fact that: \(\mathbf{v} \times \mathbf{u} = -\mathbf{u} \times \mathbf{v}\), we can pull out the \(\mathbf{g}\) and \(\mathbf{f}\) terms like so:</p>
+$$
+    \begin{bmatrix}
+    \frac{\partial \mathbf{f}}{\partial x_0} &
+    \frac{\partial \mathbf{f}}{\partial x_1} &
+    \frac{\partial \mathbf{f}}{\partial x_2} 
+    \end{bmatrix}
+    \times \mathbf{g}
+    -
+    \begin{bmatrix}
+    \frac{\partial \mathbf{g}}{\partial x_0} &
+    \frac{\partial \mathbf{g}}{\partial x_1} &
+    \frac{\partial \mathbf{g}}{\partial x_2} 
+    \end{bmatrix}
+    \times \mathbf{f} 
+$$
+<p>Now the two matrices have simply become \(\frac{\partial \mathbf{f}}{\partial \mathbf{x}}\) and \(\frac{\partial \mathbf{g}}{\partial \mathbf{x}}\) so this simplifies further into the final form:</p>
+$$
+    \bbox[5px,border:2px solid blue]
+    {
+    \mathbf{J}_{\mathbf{x}}(\mathbf{f}(\mathbf{x}) \times \mathbf{g}(\mathbf{x})) = 
+    (\frac{\partial \mathbf{f}}{\partial \mathbf{x}} \times \mathbf{g}) - 
+    (\frac{\partial \mathbf{g}}{\partial \mathbf{x}} \times \mathbf{f})
+    }
+$$
+<h2 id="afterword-on-cross-product-matrix">Afterword On Cross Product Matrix</h2>
+<p>Its worth noting what happens when the matrix in a matrix-vector cross product is the identity:
+</p>
+$$
+\mathbf{I} \times \mathbf{v} = 
+\begin{bmatrix}
+0 & v_3 & -v_2 \\\\
+-v_3 & 0 & v_1 \\\\
+v_2 & -v_1 & 0 \\\\
+\end{bmatrix}
+= -[\mathbf{v}]_{\times}
+$$
+<p>\([\mathbf{v}]_{\times}\) is a special skew-symmetric matrix which is often called the &lsquo;cross product matrix&rsquo;. The reason its called that is because when multiplied with a vector \(\mathbf{u}\) the result is the cross product \(\mathbf{v} \times \mathbf{u}\).</p>
+<p>Also to make it more clear that \(\mathbf{I} \times \mathbf{v} = -[\mathbf{v}]_{\times}:\)</p>
+<p>We have
+</p>
+$$
+\mathbf{I} \times \mathbf{v} = 
+\begin{bmatrix}
+\mathbf{e}_1 \times \mathbf{v} & \mathbf{e}_2 \times \mathbf{v} & \mathbf{e}_3 \times \mathbf{v}
+\end{bmatrix}
+$$
+<p>Where</p>
+$$
+\mathbf{e}_1 = \begin{bmatrix} 1 \\ 0 \\ 0 \end{bmatrix}, \quad
+\mathbf{e}_2 = \begin{bmatrix} 0 \\ 1 \\ 0 \end{bmatrix}, \quad
+\mathbf{e}_3 = \begin{bmatrix} 0 \\ 0 \\ 1 \end{bmatrix}
+$$
+<p>And knowing cross product in general is:</p>
+$$
+    \mathbf{a} \times \mathbf{b} = 
+    \begin{bmatrix} a_2b_3 - a_3b_2 \\ a_3b_1 - a_1b_3 \\ a_1b_2 - a_2b_1 \end{bmatrix}
+$$
+<p>Taking these column cross products then gives the form of the matrix \(\mathbf{I} \times \mathbf{v}\) shown at the beginning.</p>
+
+    </div>
+
+    <footer class="footer">
+    <p>© 2025 Jacob Harding · <a href="/disclaimer/">Disclaimer</a></p>
+</footer>
+  </main>
+
+</body>
+</html>

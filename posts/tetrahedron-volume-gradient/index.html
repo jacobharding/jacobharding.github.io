@@ -1,0 +1,133 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tetrahedron Volume Gradient</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<script>
+  MathJax = {
+    tex: {
+      displayMath: [['\\[', '\\]'], ['$$', '$$']],  
+      inlineMath: [['\\(', '\\)']]                  
+    },
+    loader:{
+      load: ['ui/safe']
+    },
+  };
+</script>
+  
+  
+</head>
+<body>
+  <main class="container">
+    <header class="profile">
+    <h1><a href="/" class="site-title">Jacob Harding</a></h1>
+    <p class="bio">Software Engineer | C++ Specialist | Graphics Enthusiast</p>
+    <p>I’m currently on the lookout for my next software engineering role — if you know of something cool, feel free to reach out! 😊</p>
+    <div class="icons">
+      <a href="https://www.linkedin.com/in/jacob-harding-a62096254/" target="_blank"><i class="fab fa-linkedin"></i></a>
+      <a href="https://github.com/jacobharding" target="_blank"><i class="fab fa-github"></i></a>
+    </div>
+</header>
+    
+    <div class="post_container">
+        <div>
+            <h2 style="margin: 0;">Tetrahedron Volume Gradient</h2>
+            <span class="date">2025-04-12</span>
+        </div>
+        <p>The (signed) volume of a tetrahedron can be calculated as:</p>
+\[
+V_{tet} = \frac{1}{6} (\mathbf{x}_1 - \mathbf{x}_0) \cdot ((\mathbf{x}_2 - \mathbf{x}_0) \times (\mathbf{x}_3 - \mathbf{x}_0))
+\]
+<p>This formula is derived from the volume of a parallelepiped. Computing the derivative of this volume is essential in many deformable body simulations which are built ontop of tetrahedral finite elements.</p>
+<p>I&rsquo;m going to make use of the dot product and cross product matrix calculus identities as well as cross product matrices in the derivation that follows. The later two of which I covered in my <a href="/posts/differentiating-the-r3-vector-cross-product/">previous post</a>. I leave them here for reference:</p>
+\[
+    \bbox[5px,border:2px solid lightblue]
+    {
+        \nabla_{\mathbf{x}} (\mathbf{f}(\mathbf{x}) \cdot \mathbf{g}(\mathbf{x})) = 
+        (\frac{\partial \mathbf{f}}{\partial \mathbf{x}})^{\top} \mathbf{g} +
+        (\frac{\partial \mathbf{g}}{\partial\mathbf{x}})^{\top} \mathbf{f}
+    }
+\]
+\[
+    \bbox[5px,border:2px solid lightblue]
+    {
+        \frac{\partial}{\partial\mathbf{x}}(\mathbf{f}(\mathbf{x}) \times \mathbf{g}(\mathbf{x})) = 
+        (\frac{\partial \mathbf{f}}{\partial \mathbf{x}} \times \mathbf{g}) - 
+        (\frac{\partial \mathbf{g}}{\partial \mathbf{x}} \times \mathbf{f})
+    }
+\]
+\[
+    \bbox[5px,border:2px solid lightblue]
+    {
+    [\mathbf{v}]_{\times} \mathbf{u} = \mathbf{v} \times \mathbf{u}
+    }
+\]
+<p>Now lets differentiate with respect to each point.</p>
+<p>Defining:
+</p>
+\[
+\mathbf{a} = \mathbf{x}_1 - \mathbf{x}_0, \mathbf{b} = \mathbf{x}_2 - \mathbf{x}_0, \mathbf{c} = \mathbf{x}_3 - \mathbf{x}_0
+\]
+<p>This gives:</p>
+\[
+\begin{aligned}
+\nabla_{\mathbf{x}_0} V &= \frac{1}{6} \nabla_{\mathbf{x}_0} \left( \mathbf{a} \cdot (\mathbf{b} \times \mathbf{c}) \right) \\
+&= \frac{1}{6} [ (\frac{\partial \mathbf{a}}{\partial \mathbf{x}_0})^{\top}(\mathbf{b} \times \mathbf{c}) + (\frac{\partial (\mathbf{b} \times \mathbf{c})}{\partial \mathbf{x}_0})^{\top} \mathbf{a}] \\
+&= \frac{1}{6} [ -\mathbf{I}(\mathbf{b} \times \mathbf{c}) + (\frac{\partial \mathbf{b}}{\partial \mathbf{x}_0} \times \mathbf{c} - \frac{\partial \mathbf{c}}{\partial \mathbf{x}_0} \times \mathbf{b} )^{\top} \mathbf{a} ] \\
+&= \frac{1}{6} [ -(\mathbf{b} \times \mathbf{c}) + (- \mathbf{I} \times \mathbf{c} + \mathbf{I}\times \mathbf{b} )^{\top} \mathbf{a} ] \\
+&= \frac{1}{6} [ -(\mathbf{b} \times \mathbf{c}) + ([\mathbf{c}]_{\times} - [\mathbf{b}]_{\times})^{\top} \mathbf{a} ] \\
+&= \frac{1}{6} [ -(\mathbf{b} \times \mathbf{c}) + (-[\mathbf{b}]_{\times}^{\top} + [\mathbf{c}]_{\times}^{\top}) \mathbf{a} ] \\
+&= \frac{1}{6} [ -(\mathbf{b} \times \mathbf{c}) + ([\mathbf{b}]_{\times} - [\mathbf{c}]_{\times}) \mathbf{a} ] \\
+&= \frac{1}{6} [ -(\mathbf{b} \times \mathbf{c}) + (\mathbf{b} \times \mathbf{a}) - (\mathbf{c} \times \mathbf{a}) ] \\
+&= \frac{1}{6} [ -(\mathbf{b} \times \mathbf{c}) - (\mathbf{a} \times \mathbf{b}) - (\mathbf{c} \times \mathbf{a}) ] \\
+&= -\frac{1}{6} [(\mathbf{b} \times \mathbf{c}) + (\mathbf{a} \times \mathbf{b}) + (\mathbf{c} \times \mathbf{a}) ] \\
+\\ \\
+\nabla_{\mathbf{x}_1} V &= \frac{1}{6} \nabla_{\mathbf{x}_1} \left( \mathbf{a} \cdot (\mathbf{b} \times \mathbf{c}) \right) \\
+&= \frac{1}{6} [ (\frac{\partial \mathbf{a}}{\partial \mathbf{x}_1})^{\top}(\mathbf{b} \times \mathbf{c}) + (\frac{\partial (\mathbf{b} \times \mathbf{c})}{\partial \mathbf{x}_1})^{\top} \mathbf{a}] \\
+&= \frac{1}{6} [\mathbf{I}(\mathbf{b} \times \mathbf{c}) + (\mathbf{0})^{\top} \mathbf{a} ] \\
+&= \frac{1}{6} \mathbf{b} \times \mathbf{c} \\
+\\ \\
+\nabla_{\mathbf{x}_2} V &= \frac{1}{6} \nabla_{\mathbf{x}_2} \left( \mathbf{a} \cdot (\mathbf{b} \times \mathbf{c}) \right) \\
+&= \frac{1}{6} [ (\frac{\partial \mathbf{a}}{\partial \mathbf{x}_2})^{\top}(\mathbf{b} \times \mathbf{c}) + (\frac{\partial (\mathbf{b} \times \mathbf{c})}{\partial \mathbf{x}_2})^{\top} \mathbf{a}] \\
+&= \frac{1}{6} [\mathbf{0}(\mathbf{b} \times \mathbf{c}) + (\frac{\partial \mathbf{b}}{\partial \mathbf{x}_2} \times \mathbf{c} - \frac{\partial \mathbf{c}}{\partial \mathbf{x}_2} \times \mathbf{b} )^{\top} \mathbf{a} ] \\
+&= \frac{1}{6} [(\frac{\partial \mathbf{b}}{\partial \mathbf{x}_2} \times \mathbf{c} - \frac{\partial \mathbf{c}}{\partial \mathbf{x}_2} \times \mathbf{b} )^{\top} \mathbf{a}] \\
+&= \frac{1}{6} [(\mathbf{I} \times \mathbf{c} - \mathbf{0} \times \mathbf{b} )^{\top} \mathbf{a}] \\
+&= \frac{1}{6} [(-[\mathbf{c}]_{\times})^{\top} \mathbf{a}] \\
+&= \frac{1}{6} \mathbf{c} \times \mathbf{a} \\
+\\ \\
+\nabla_{\mathbf{x}_3} V &= \frac{1}{6} \nabla_{\mathbf{x}_3} \left( \mathbf{a} \cdot (\mathbf{b} \times \mathbf{c}) \right) \\
+&= \frac{1}{6} [ (\frac{\partial \mathbf{a}}{\partial \mathbf{x}_3})^{\top}(\mathbf{b} \times \mathbf{c}) + (\frac{\partial (\mathbf{b} \times \mathbf{c})}{\partial \mathbf{x}_3})^{\top} \mathbf{a}] \\
+&= \frac{1}{6} [\mathbf{0}(\mathbf{b} \times \mathbf{c}) + (\frac{\partial \mathbf{b}}{\partial \mathbf{x}_3} \times \mathbf{c} - \frac{\partial \mathbf{c}}{\partial \mathbf{x}_3} \times \mathbf{b} )^{\top} \mathbf{a} ] \\
+&= \frac{1}{6} [(\mathbf{0} \times \mathbf{c} - \mathbf{I} \times \mathbf{b} )^{\top} \mathbf{a}] \\
+&= \frac{1}{6} [([\mathbf{b}]_{\times})^{\top} \mathbf{a}] \\
+&= \frac{1}{6} \mathbf{a} \times \mathbf{b} \\
+\end{aligned} 
+\]
+<p>As a summary:</p>
+\[
+\bbox[5px,border:2px solid blue]{
+\begin{aligned}
+\nabla_{\mathbf{x}_0} V &= -\frac{1}{6} [(\mathbf{b} \times \mathbf{c}) + (\mathbf{a} \times \mathbf{b}) + (\mathbf{c} \times \mathbf{a}) ] \\
+\nabla_{\mathbf{x}_1} V &= \frac{1}{6} \mathbf{b} \times \mathbf{c} \\
+\nabla_{\mathbf{x}_2} V &= \frac{1}{6} \mathbf{c} \times \mathbf{a} \\
+\nabla_{\mathbf{x}_3} V &= \frac{1}{6} \mathbf{a} \times \mathbf{b}
+\end{aligned}
+} 
+\]
+
+    </div>
+
+    <footer class="footer">
+    <p>© 2025 Jacob Harding · <a href="/disclaimer/">Disclaimer</a></p>
+</footer>
+  </main>
+
+</body>
+</html>

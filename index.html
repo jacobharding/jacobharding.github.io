@@ -1,0 +1,69 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta name="generator" content="Hugo 0.124.1">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jacob Harding</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<script>
+  MathJax = {
+    tex: {
+      displayMath: [['\\[', '\\]'], ['$$', '$$']],  
+      inlineMath: [['\\(', '\\)']]                  
+    },
+    loader:{
+      load: ['ui/safe']
+    },
+  };
+</script>
+  
+  
+</head>
+<body>
+  <main class="container">
+    <header class="profile">
+    <h1><a href="/" class="site-title">Jacob Harding</a></h1>
+    <p class="bio">Software Engineer | C++ Specialist | Graphics Enthusiast</p>
+    <p>I’m currently on the lookout for my next software engineering role — if you know of something cool, feel free to reach out! 😊</p>
+    <div class="icons">
+      <a href="https://www.linkedin.com/in/jacob-harding-a62096254/" target="_blank"><i class="fab fa-linkedin"></i></a>
+      <a href="https://github.com/jacobharding" target="_blank"><i class="fab fa-github"></i></a>
+    </div>
+</header>
+    
+  <section class="posts">
+    
+      <article class="post-card">
+        <h2><a href="/posts/tetrahedron-volume-gradient/">Tetrahedron Volume Gradient</a></h2>
+        <p>The (signed) volume of a tetrahedron can be calculated as:
+\[ V_{tet} = \frac{1}{6} (\mathbf{x}_1 - \mathbf{x}_0) \cdot ((\mathbf{x}_2 - \mathbf{x}_0) \times (\mathbf{x}_3 - \mathbf{x}_0)) \] This formula is derived from the volume of a parallelepiped. Computing the derivative of this volume is essential in many deformable body simulations which are built ontop of tetrahedral finite elements.
+I&rsquo;m going to make use of the dot product and cross product matrix calculus identities as well as cross product matrices in the derivation that follows.</p>
+      </article>
+    
+      <article class="post-card">
+        <h2><a href="/posts/differentiating-the-r3-vector-cross-product/">Differentiating the R^3 Multivariate Vector Cross Product</a></h2>
+        <p>Suppose \(\mathbf{x} \in \mathbb{R}^{3 \times 1}\) and \(\mathbf{f}(\mathbf{x}), \mathbf{g}(\mathbf{x}): \mathbb{R}^{3 \times 1} \rightarrow \mathbb{R}^{3 \times 1}\). The goal is to find the matrix of first-order partial derivatives of the cross product of \(\mathbf{f}\) and \(\mathbf{g}\):
+\[ \frac{\partial}{\partial \mathbf{x}}(\mathbf{f}(\mathbf{x}) \times \mathbf{g}(\mathbf{x}))\] A matrix of first-order partial derivatives is also called a Jacobian matrix so an equivalent notation can be defined:
+\[ \mathbf{J}_{\mathbf{x}}(\mathbf{f}(\mathbf{x}) \times \mathbf{g}(\mathbf{x})) = \frac{\partial}{\partial \mathbf{x}}(\mathbf{f}(\mathbf{x}) \times \mathbf{g}(\mathbf{x}))\] Instead of taking the derivative with respect to the whole \(\mathbf{x}\), its easier to take it with respect to each component of \(\mathbf{x}\) individually, and build the Jacobian from each of these derivatives.</p>
+      </article>
+    
+
+    <div class="pagination">
+      
+      
+    </div>
+  </section>
+
+    <footer class="footer">
+    <p>© 2025 Jacob Harding · <a href="/disclaimer/">Disclaimer</a></p>
+</footer>
+  </main>
+
+</body>
+</html>

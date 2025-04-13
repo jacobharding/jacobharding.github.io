@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Blog Posts on Jacob Harding</title>
+    <link>https://jacobharding.github.io/posts/</link>
+    <description>Recent content in Blog Posts on Jacob Harding</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 12 Apr 2025 13:00:15 -0700</lastBuildDate>
+    <atom:link href="https://jacobharding.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Tetrahedron Volume Gradient</title>
+      <link>https://jacobharding.github.io/posts/tetrahedron-volume-gradient/</link>
+      <pubDate>Sat, 12 Apr 2025 13:00:15 -0700</pubDate>
+      <guid>https://jacobharding.github.io/posts/tetrahedron-volume-gradient/</guid>
+      <description>The (signed) volume of a tetrahedron can be calculated as:&#xA;\[ V_{tet} = \frac{1}{6} (\mathbf{x}_1 - \mathbf{x}_0) \cdot ((\mathbf{x}_2 - \mathbf{x}_0) \times (\mathbf{x}_3 - \mathbf{x}_0)) \] This formula is derived from the volume of a parallelepiped. Computing the derivative of this volume is essential in many deformable body simulations which are built ontop of tetrahedral finite elements.&#xA;I&amp;rsquo;m going to make use of the dot product and cross product matrix calculus identities as well as cross product matrices in the derivation that follows.</description>
+    </item>
+    <item>
+      <title>Differentiating the R^3 Multivariate Vector Cross Product</title>
+      <link>https://jacobharding.github.io/posts/differentiating-the-r3-vector-cross-product/</link>
+      <pubDate>Wed, 09 Apr 2025 17:09:05 -0700</pubDate>
+      <guid>https://jacobharding.github.io/posts/differentiating-the-r3-vector-cross-product/</guid>
+      <description>Suppose \(\mathbf{x} \in \mathbb{R}^{3 \times 1}\) and \(\mathbf{f}(\mathbf{x}), \mathbf{g}(\mathbf{x}): \mathbb{R}^{3 \times 1} \rightarrow \mathbb{R}^{3 \times 1}\). The goal is to find the matrix of first-order partial derivatives of the cross product of \(\mathbf{f}\) and \(\mathbf{g}\):&#xA;\[ \frac{\partial}{\partial \mathbf{x}}(\mathbf{f}(\mathbf{x}) \times \mathbf{g}(\mathbf{x}))\] A matrix of first-order partial derivatives is also called a Jacobian matrix so an equivalent notation can be defined:&#xA;\[ \mathbf{J}_{\mathbf{x}}(\mathbf{f}(\mathbf{x}) \times \mathbf{g}(\mathbf{x})) = \frac{\partial}{\partial \mathbf{x}}(\mathbf{f}(\mathbf{x}) \times \mathbf{g}(\mathbf{x}))\] Instead of taking the derivative with respect to the whole \(\mathbf{x}\), its easier to take it with respect to each component of \(\mathbf{x}\) individually, and build the Jacobian from each of these derivatives.</description>
+    </item>
+  </channel>
+</rss>
